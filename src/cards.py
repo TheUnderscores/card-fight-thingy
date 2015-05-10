@@ -17,5 +17,5 @@ class Card:
             card_type = Card.card_types[randint(len(Card.card_types))]
 
         self.card_type = card_type
-        self.value = randint(card_limits[card_type][0],
-            card_limits[card_type][1])
+        self.value = randint(value_limits[card_type][0],
+            value_limits[card_type][1])
