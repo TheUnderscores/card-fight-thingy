@@ -5,7 +5,7 @@ srand(time())
 
 class Card:
     card_types = ("def", "atk")
-    card_limits = {"def": (1, 25), "atk": (1, 40)}
+    value_limits = {"def": (1, 25), "atk": (1, 40)}
 
     def __init__(self, card_type = None, card_value = None):
         if card_type:
