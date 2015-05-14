@@ -29,7 +29,7 @@ srand(time())
 
 def withinRange(n, a, b):
     """Returns True if a <= n <= b, False otherwise"""
-    if n <= a and n >= b:
+    if n >= a and n <= b:
         return True
     else:
         return False
@@ -37,7 +37,7 @@ def withinRange(n, a, b):
 class Card:
     """Main card class"""
 
-    def __init__(self, value):
+    def __init__(self, value=None):
         """
         Initialize card.
         May specify the cards value with the optional parameter 'value'.
