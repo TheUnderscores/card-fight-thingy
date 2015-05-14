@@ -25,19 +25,45 @@
 class Player():
     def __init__(self):
         self.health = 100
-        self.defense = 0
+        # Up to 3 active defense cards
+        self.defense = [0, 0, 0]
         # TODO : Implement card class
         # self.cards = Card.generateDeck()
 
+    def kill(self):
+        """Removes a player from the game"""
+        pass
+
     def takeDamage(self, damage):
-        if self.defense > 0:
-            if damage > self.defense:
-                # Defense won't eat all damange
-                damage -= self.defense
-                self.defense = 0
+        """
+        Applies damage to player.
+        Defense is effected first, than health.
+        If a player's health is below 0, player is killed with Player.kill().
+        """
+        # Parse through defense stack from top to bottom
+        for i in range(len(self.defense)-1, -1, -1):
+            if self.defense[i] >= damage:
+                # Defense slot absorbs all of damage
+                self.defense[i] -= damage
+                damage = 0
             else:
-                # Defense will eat all damage
-                self.defense -= damage
-                return
+                # Defense slot absorbs some or none of damage
+                damage -= self.defense[i]
+                self.defense[i] = 0
 
         self.health -= damage
+
+    def addDefense(self, defense):
+        """
+        If defense stack if empty, adds defense to stack and returns True.
+        If defense stack is full, do not nothing and return False
+        """
+        # Parse through defense stack looking for empty slot
+        for i in range(0, len(self.defense)):
+            if self.defense[i] == 0:
+                # Empty defense slot found and will now be filled
+                self.defense[i] = defense
+                return True
+
+        # No empty slot was found
+        return False
