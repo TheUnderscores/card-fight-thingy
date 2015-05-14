@@ -63,6 +63,19 @@ class Card_Def(Card):
         """
         Card.__init__(self, value=value)
 
+    def apply(self, player):
+        """
+        Attempts to add value of defense card to player's defense stack.
+        If player has no vacant defense slots, return False.
+        If defense was successfully applies, return True.
+        """
+        if player.addDefense(self.value):
+            # Defense succefully applied
+            return True
+        else:
+            # Defense card could not be applied
+            return False
+
 class Card_Atk(Card):
     """Attack card class"""
 
@@ -76,3 +89,9 @@ class Card_Atk(Card):
         generated within proper range.
         """
         Card.__init__(self, value=value)
+
+    def apply(self, player):
+        """
+        Attempts to add value of defense card to player's defense stack.
+        """
+        player.takeDamage(self.value)
