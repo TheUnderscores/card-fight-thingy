@@ -35,20 +35,44 @@ def withinRange(n, a, b):
         return False
 
 class Card:
+    """Main card class"""
+
     def __init__(self, value):
+        """
+        Initialize card.
+        May specify the cards value with the optional parameter 'value'.
+        If no value if given or value is out of range, value will be randomly
+        generated within proper range.
+        """
         if (value != None and withinRange(value, *self.value_range)):
             self.value = value
         else:
             self.value = randint(*self.value_range)
 
 class Card_Def(Card):
+    """Defense card class"""
+
     value_range = (1, 25)
 
     def __init__(self, value=None):
+        """
+        Initialize defense card.
+        May specify the cards value with the optional parameter 'value'.
+        If no value if given or value is out of range, value will be randomly
+        generated within proper range.
+        """
         Card.__init__(self, value=value)
 
 class Card_Atk(Card):
+    """Attack card class"""
+
     value_range = (1, 40)
 
     def __init__(self, value=None):
+        """
+        Initialize attack card.
+        May specify the cards value with the optional parameter 'value'.
+        If no value if given or value is out of range, value will be randomly
+        generated within proper range.
+        """
         Card.__init__(self, value=value)
