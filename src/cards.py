@@ -27,19 +27,28 @@ from time import time
 
 srand(time())
 
+def withinRange(n, a, b):
+    """Returns True if a <= n <= b, False otherwise"""
+    if n <= a and n >= b:
+        return True
+    else:
+        return False
+
 class Card:
-    card_types = ("def", "atk")
-    value_limits = {"def": (1, 25), "atk": (1, 40)}
-
-    def __init__(self, card_type = None, card_value = None):
-        if card_type:
-            if not card_type in card_types:
-                print("ERROR: Invalid card type")
-                return False
+    def __init__(self, value):
+        if (value != None and withinRange(value, *self.value_range)):
+            self.value = value
         else:
-            # Randomize card type
-            card_type = Card.card_types[randint(len(Card.card_types))]
+            self.value = randint(*self.value_range)
 
-        self.card_type = card_type
-        self.value = randint(value_limits[card_type][0],
-            value_limits[card_type][1])
+class Card_Def(Card):
+    value_range = (1, 25)
+
+    def __init__(self, value=None):
+        Card.__init__(self, value=value)
+
+class Card_Atk(Card):
+    value_range = (1, 40)
+
+    def __init__(self, value=None):
+        Card.__init__(self, value=value)
