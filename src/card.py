@@ -58,7 +58,7 @@ class Card_Def(Card):
         If no value if given or value is out of range, value will be randomly
         generated within proper range.
         """
-        Card.__init__(self, value=value)
+        super().__init__(self, value=value)
 
     def apply(self, player):
         """
@@ -80,7 +80,7 @@ class Card_Atk(Card):
         If no value if given or value is out of range, value will be randomly
         generated within proper range.
         """
-        Card.__init__(self, value=value)
+        super().__init__(self, value=value)
 
     def apply(self, player):
         """
