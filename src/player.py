@@ -22,22 +22,65 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
+import card
+
 class Player():
+    deckLen = 7
+
     def __init__(self):
         self.health = 100
-        self.defense = 0
-        # TODO : Implement card class
-        # self.cards = Card.generateDeck()
+        # Up to 3 active defense cards
+        self.defense = [0, 0, 0]
+        self.cards = [None for c in range(self.deckLen)]
+        self.generateCards()
+
+    def generateCards(self):
+        """Fills self.cards with random cards"""
+        for c in range(len(self.cards)):
+            self.cards[c] = card.randCard()
+
+    def removeCard(self, c):
+        """Removes and replaces card at index c from self.cards"""
+        if not (0 <= c < len(self.cards)):
+            return False
+
+        self.cards[c] = card.randCard()
+        return True
+
+    def kill(self):
+        """Removes a player from the game"""
+        pass
 
     def takeDamage(self, damage):
-        if self.defense > 0:
-            if damage > self.defense:
-                # Defense won't eat all damange
-                damage -= self.defense
-                self.defense = 0
+        """
+        Applies damage to player.
+        Defense is effected first, than health.
+        If a player's health is below 0, player is killed with Player.kill().
+        """
+        # Parse through defense stack from top to bottom
+        for i in range(len(self.defense)-1, -1, -1):
+            if self.defense[i] >= damage:
+                # Defense slot absorbs all of damage
+                self.defense[i] -= damage
+                damage = 0
             else:
-                # Defense will eat all damage
-                self.defense -= damage
-                return
+                # Defense slot absorbs some or none of damage
+                damage -= self.defense[i]
+                self.defense[i] = 0
 
         self.health -= damage
+
+    def addDefense(self, defense):
+        """
+        If defense stack if empty, adds defense to stack and returns True.
+        If defense stack is full, do not nothing and return False
+        """
+        # Parse through defense stack looking for empty slot
+        for i in range(0, len(self.defense)):
+            if self.defense[i] == 0:
+                # Empty defense slot found and will now be filled
+                self.defense[i] = defense
+                return True
+
+        # No empty slot was found
+        return False
