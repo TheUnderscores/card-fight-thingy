@@ -29,10 +29,7 @@ srand(time())
 
 def withinRange(n, a, b):
     """Returns True if a <= n <= b, False otherwise"""
-    if n >= a and n <= b:
-        return True
-    else:
-        return False
+    return a <= n <= b
 
 class Card:
     """Main card class"""
@@ -61,7 +58,7 @@ class Card_Def(Card):
         If no value if given or value is out of range, value will be randomly
         generated within proper range.
         """
-        Card.__init__(self, value=value)
+        super().__init__(self, value=value)
 
     def apply(self, player):
         """
@@ -69,12 +66,7 @@ class Card_Def(Card):
         If player has no vacant defense slots, return False.
         If defense was successfully applies, return True.
         """
-        if player.addDefense(self.value):
-            # Defense succefully applied
-            return True
-        else:
-            # Defense card could not be applied
-            return False
+        return player.addDefense(self.value)
 
 class Card_Atk(Card):
     """Attack card class"""
@@ -88,7 +80,7 @@ class Card_Atk(Card):
         If no value if given or value is out of range, value will be randomly
         generated within proper range.
         """
-        Card.__init__(self, value=value)
+        super().__init__(self, value=value)
 
     def apply(self, player):
         """
