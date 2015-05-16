@@ -27,9 +27,7 @@ from time import time
 
 srand(time())
 
-def withinRange(n, a, b):
-    """Returns True if a <= n <= b, False otherwise"""
-    return a <= n <= b
+withinRange = lambda n, a, b: a <= n <= b
 
 class Card:
     """Main card class"""
