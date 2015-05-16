@@ -58,7 +58,7 @@ class Card_Def(Card):
         If no value if given or value is out of range, value will be randomly
         generated within proper range.
         """
-        super().__init__(self, value=value)
+        super().__init__(value=value)
 
     def apply(self, player):
         """
@@ -80,10 +80,17 @@ class Card_Atk(Card):
         If no value if given or value is out of range, value will be randomly
         generated within proper range.
         """
-        super().__init__(self, value=value)
+        super().__init__(value=value)
 
     def apply(self, player):
         """
         Attempts to add value of defense card to player's defense stack.
         """
         player.takeDamage(self.value)
+
+def randCard():
+    """Return a random card"""
+    if randint(0, 1) == 0:
+        return Card_Def()
+    else:
+        return Card_Atk()

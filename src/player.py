@@ -22,13 +22,30 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
+import card
+
 class Player():
+    deckLen = 7
+
     def __init__(self):
         self.health = 100
         # Up to 3 active defense cards
         self.defense = [0, 0, 0]
-        # TODO : Implement card class
-        # self.cards = Card.generateDeck()
+        self.cards = [None for c in range(self.deckLen)]
+        self.generateCards()
+
+    def generateCards(self):
+        """Fills self.cards with random cards"""
+        for c in range(len(self.cards)):
+            self.cards[c] = card.randCard()
+
+    def removeCard(self, c):
+        """Removes and replaces card at index c from self.cards"""
+        if not (0 <= c < len(self.cards)):
+            return False
+
+        self.cards[c] = card.randCard()
+        return True
 
     def kill(self):
         """Removes a player from the game"""
