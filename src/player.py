@@ -70,6 +70,7 @@ class Player():
                 # Defense slot absorbs all of damage
                 self.defense[i] -= damage
                 damage = 0
+                break
             else:
                 # Defense slot absorbs some or none of damage
                 damage -= self.defense[i]
