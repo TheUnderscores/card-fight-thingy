@@ -70,6 +70,8 @@ class Player():
 
         self.health -= damage
 
+        if self.health <= 0: self.kill()
+
     def addDefense(self, defense):
         """
         If defense stack if empty, adds defense to stack and returns True.
