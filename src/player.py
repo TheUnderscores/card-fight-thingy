@@ -52,14 +52,7 @@ class Player():
     def showCards(self):
         """Prints out currently held cards"""
         for c in self.cards:
-            if type(c) is card.Card_Atk:
-                sys.stdout.write("A")
-            elif type(c) is card.Card_Def:
-                sys.stdout.write("D")
-            else:
-                print("showCards(): Unknown type \"{}\"".format(type(c)))
-
-            sys.stdout.write(" {}\n".format(c.value))
+            print("{} {}".format(c.symbol, c.value))
 
     def kill(self):
         """Removes a player from the game"""

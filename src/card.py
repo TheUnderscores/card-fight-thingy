@@ -32,7 +32,7 @@ withinRange = lambda n, a, b: a <= n <= b
 class Card:
     """Main card class"""
 
-    def __init__(self, value = None):
+    def __init__(self, value = None, symbol = None):
         """
         Initialize card.
         May specify the cards value with the optional parameter 'value'.
@@ -43,6 +43,8 @@ class Card:
             self.value = value
         else:
             self.value = randint(*self.value_range)
+
+        self.symbol = symbol
 
 class Card_Def(Card):
     """Defense card class"""
@@ -56,7 +58,7 @@ class Card_Def(Card):
         If no value if given or value is out of range, value will be randomly
         generated within proper range.
         """
-        super().__init__(value = value)
+        super().__init__(value = value, symbol = "D")
 
     def apply(self, player):
         """
@@ -78,7 +80,7 @@ class Card_Atk(Card):
         If no value if given or value is out of range, value will be randomly
         generated within proper range.
         """
-        super().__init__(value = value)
+        super().__init__(value = value, symbol = "A")
 
     def apply(self, player):
         """
