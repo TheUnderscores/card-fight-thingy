@@ -32,7 +32,7 @@ withinRange = lambda n, a, b: a <= n <= b
 class Card:
     """Main card class"""
 
-    def __init__(self, value=None):
+    def __init__(self, value = None):
         """
         Initialize card.
         May specify the cards value with the optional parameter 'value'.
@@ -49,14 +49,14 @@ class Card_Def(Card):
 
     value_range = (1, 25)
 
-    def __init__(self, value=None):
+    def __init__(self, value = None):
         """
         Initialize defense card.
         May specify the cards value with the optional parameter 'value'.
         If no value if given or value is out of range, value will be randomly
         generated within proper range.
         """
-        super().__init__(value=value)
+        super().__init__(value = value)
 
     def apply(self, player):
         """
@@ -71,14 +71,14 @@ class Card_Atk(Card):
 
     value_range = (1, 40)
 
-    def __init__(self, value=None):
+    def __init__(self, value = None):
         """
         Initialize attack card.
         May specify the cards value with the optional parameter 'value'.
         If no value if given or value is out of range, value will be randomly
         generated within proper range.
         """
-        super().__init__(value=value)
+        super().__init__(value = value)
 
     def apply(self, player):
         """
