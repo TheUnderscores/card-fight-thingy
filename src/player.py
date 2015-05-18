@@ -22,6 +22,8 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
+import sys
+
 import card
 
 class Player():
@@ -46,6 +48,18 @@ class Player():
 
         self.cards[c] = card.randCard()
         return True
+
+    def showCards(self):
+        """Prints out currently held cards"""
+        for c in self.cards:
+            if type(c) is card.Card_Atk:
+                sys.stdout.write("A")
+            elif type(c) is card.Card_Def:
+                sys.stdout.write("D")
+            else:
+                print("showCards(): Unknown type \"{}\"".format(type(c)))
+
+            sys.stdout.write(" {}\n".format(c.value))
 
     def kill(self):
         """Removes a player from the game"""
