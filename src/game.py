@@ -24,6 +24,7 @@
 
 from general import withinRange
 from player import Player
+import card
 
 def initGame(pCount):
     """Initializes game with pCount number of players"""
@@ -74,12 +75,13 @@ def takeTurn(pNum):
         if not cardNum:
             continue
 
-        card = curPlyr.cards[cardNum-1]
-        if card.type == "def":
-            if not card.apply(curPlyr):
+        curCard = curPlyr.cards[cardNum-1]
+
+        if type(curCard) is card.Card_Def:
+            if not curCard.apply(curPlyr):
                 print("Cannot use a defense card. Defense stack is full. Try again...")
                 continue
-        elif card.type == "atk":
+        elif type(curCard) is card.Card_Atk:
             while True:
                 victim = getInt(
                     "Enter the number of the player you'd like to attack: ",
@@ -92,7 +94,7 @@ def takeTurn(pNum):
                     print("You cannot attack yourself. Try again...")
                     continue
 
-                card.apply(playerStack[victim-1])
+                curCard.apply(playerStack[victim-1])
                 break
         else:
             print("Unexpected error")
