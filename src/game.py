@@ -40,12 +40,8 @@ def dispPlayers():
             # Defense stack is empty
             defStr = ""
         else:
-            defStr = "[" + str(plyr.defense[0])
-            for d in range(1, len(plyr.defense)):
-                if plyr.defense[d] == 0:
-                    break
-                defStr += ", " + str(plyr.defense[d])
-            defStr += "]"
+            defStr = "[{} {} {}]".format(*plyr.defense)
+
         print("Player #" + str(p+1) + ":\t" +
               str(playerStack[p].health) + "HP\t" + defStr)
 
