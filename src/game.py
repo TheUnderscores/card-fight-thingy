@@ -78,7 +78,7 @@ def takeTurn(pNum):
 
         if type(curCard) is card.Card_Def:
             if not curCard.apply(curPlyr):
-                print("Cannot use a defense card. Defense stack is full. Try again...")
+                print("Cannot use card - defense stack is full. Try again...")
                 continue
         elif type(curCard) is card.Card_Atk:
             while True:
