@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 # card-fight-thingy - Simplistic battle card game... thingy
 #
 # The MIT License (MIT)
