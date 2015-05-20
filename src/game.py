@@ -54,9 +54,8 @@ def getInt(msg, a, b):
         return False
 
     if not withinRange(num, a, b):
-        print("Number is out of range (" + str(a) + " - " + str(b) +
-              ") Try again...")
-        return False
+        print("Number is out of range ({} - {}) Try again...".format(a, b))
+         return False
 
     return num
 
