@@ -26,14 +26,12 @@
 
 import game
 
-#TODO: turn this into a loop
-game.initGame(2)
-game.dispPlayers()
-game.takeTurn(0)
-game.dispPlayers()
-game.takeTurn(1)
-game.dispPlayers()
-game.takeTurn(0)
-game.dispPlayers()
-game.takeTurn(1)
-game.dispPlayers()
+#TODO: Have end condition
+
+players = 2
+game.initGame(players)
+
+while True:
+    for i in range(players):
+        game.dispPlayers()
+        game.takeTurn(i)
