@@ -22,12 +22,11 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
+from general import withinRange
 from random import seed as srand, randint
 from time import time
 
 srand(time())
-
-withinRange = lambda n, a, b: a <= n <= b
 
 class Card:
     """Main card class"""
@@ -49,6 +48,7 @@ class Card:
 class Card_Def(Card):
     """Defense card class"""
 
+    typ = "def"
     value_range = (1, 25)
 
     def __init__(self, value = None):
@@ -71,6 +71,7 @@ class Card_Def(Card):
 class Card_Atk(Card):
     """Attack card class"""
 
+    typ = "atk"
     value_range = (1, 40)
 
     def __init__(self, value = None):

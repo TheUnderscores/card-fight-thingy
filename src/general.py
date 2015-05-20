@@ -22,16 +22,4 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-import game
-
-#TODO: turn this into a loop
-game.initGame(2)
-game.dispPlayers()
-game.takeTurn(0)
-game.dispPlayers()
-game.takeTurn(1)
-game.dispPlayers()
-game.takeTurn(0)
-game.dispPlayers()
-game.takeTurn(1)
-game.dispPlayers()
+withinRange = lambda n, a, b: a <= n <= b
