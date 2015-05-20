@@ -48,7 +48,7 @@ class Card:
 class Card_Def(Card):
     """Defense card class"""
 
-    typ = "def"
+    type = "def"
     value_range = (1, 25)
 
     def __init__(self, value = None):
@@ -71,7 +71,7 @@ class Card_Def(Card):
 class Card_Atk(Card):
     """Attack card class"""
 
-    typ = "atk"
+    type = "atk"
     value_range = (1, 40)
 
     def __init__(self, value = None):

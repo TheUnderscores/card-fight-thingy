@@ -79,11 +79,11 @@ def takeTurn(pNum):
             continue
 
         card = curPlyr.cards[cardNum-1]
-        if card.typ == "def":
+        if card.type == "def":
             if not card.apply(curPlyr):
                 print("Cannot use a defense card. Defense stack is full. Try again...")
                 continue
-        elif card.typ == "atk":
+        elif card.type == "atk":
             while True:
                 victim = getInt(
                     "Enter the number of the player you'd like to attack: ",
