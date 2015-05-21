@@ -94,7 +94,7 @@ def takeTurn(pNum):
                 curCard.apply(playerStack[victim-1])
                 break
         else:
-            print("Unexpected error")
+            print("Did not expect object of type \"{}\"".format(type(curCard))
             continue
 
         curPlyr.removeCard(cardNum-1)
