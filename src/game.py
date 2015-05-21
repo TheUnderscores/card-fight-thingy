@@ -35,16 +35,14 @@ def initGame(pCount):
 
 def dispPlayers():
     global playerStack
-    for p in range(len(playerStack)):
-        plyr = playerStack[p]
+    for i, plyr in enumerate(playerStack):
         if plyr.defense[0] == 0:
             # Defense stack is empty
             defStr = ""
         else:
             defStr = "[{} {} {}]".format(*plyr.defense)
 
-        print("Player #" + str(p+1) + ":\t" +
-              str(playerStack[p].health) + "HP\t" + defStr)
+        print("Player #{}:\t{}HP\t{}".format(i + 1, plyr.health, defStr))
 
 def getInt(msg, a, b):
     try:
