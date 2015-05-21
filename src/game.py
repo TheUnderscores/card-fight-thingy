@@ -53,7 +53,7 @@ def getInt(msg, a, b):
 
     if not withinRange(num, a, b):
         print("Number is out of range ({} - {}) Try again...".format(a, b))
-         return False
+        return False
 
     return num
 
