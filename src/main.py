@@ -24,14 +24,33 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
+import sys
+
 import game
 
-#TODO: Have end condition
+num_players = 2
+player_stack = game.initGame(num_players)
 
-players = 2
-game.initGame(players)
+try:
+    while True:
+        for i in range(len(player_stack)):
+            game.dispPlayers(player_stack)
+            game.takeTurn(player_stack, i)
 
-while True:
-    for i in range(players):
-        game.dispPlayers()
-        game.takeTurn(i)
+        # Check if only one player remains
+        c = 0
+
+        for i, e in enumerate(player_stack):
+            if e is None: continue
+
+            c += 1
+
+            if c > 1:
+                break
+
+        if c == 1: raise game.GameOverException
+
+except game.GameOverException:
+    pass
+
+print("Game over. Player {} wins.".format(i))

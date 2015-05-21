@@ -26,6 +26,8 @@ from general import withinRange
 from random import seed as srand, randint
 from time import time
 
+import player
+
 srand(time())
 
 class Card:
@@ -81,11 +83,15 @@ class Card_Atk(Card):
         """
         super().__init__(value = value, symbol = "A")
 
-    def apply(self, player):
+    def apply(self, target):
         """
-        Attempts to add value of defense card to player's defense stack.
+        Uses card to attack other player of choice. Returns True when
+        the card causes the death of the player it was used against.
         """
-        player.takeDamage(self.value)
+        try:
+            target.takeDamage(self.value)
+        except player.PlayerKilledException:
+            return True
 
 def randCard():
     """Return a random card"""

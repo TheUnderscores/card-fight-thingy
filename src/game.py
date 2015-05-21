@@ -26,16 +26,22 @@ from general import withinRange
 from player import Player
 import card
 
+class GameOverException(Exception):
+    pass
+
 def initGame(pCount):
     """Initializes game with pCount number of players"""
-    global playerStack
-    playerStack = []
-    for p in range(pCount):
-        playerStack.append(Player())
+    l = []
 
-def dispPlayers():
-    global playerStack
-    for i, plyr in enumerate(playerStack):
+    for p in range(pCount):
+        l.append(Player())
+
+    return l
+
+def dispPlayers(stack):
+    for i, plyr in enumerate(stack):
+        if plyr is None: continue
+
         if plyr.defense[0] == 0:
             # Defense stack is empty
             defStr = ""
@@ -57,9 +63,11 @@ def getInt(msg, a, b):
 
     return num
 
-def takeTurn(pNum):
+def takeTurn(playerStack, pNum):
     """Have player at playerStack index pNum take their turn"""
-    global playerStack
+
+    if playerStack[pNum] is None: return
+
     print("Player #" + str(pNum+1) + "'s turn...")
     curPlyr = playerStack[pNum]
     while True:
@@ -91,7 +99,10 @@ def takeTurn(pNum):
                     print("You cannot attack yourself. Try again...")
                     continue
 
-                curCard.apply(playerStack[victim-1])
+                if curCard.apply(playerStack[victim - 1]):
+                    # Player was killed, remove from list
+                    playerStack[victim - 1] = None
+
                 break
         else:
             print("Did not expect object of type \"{}\"".format(type(curCard)))
