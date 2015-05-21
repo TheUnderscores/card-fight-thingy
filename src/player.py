@@ -51,9 +51,8 @@ class Player():
 
     def showCards(self):
         """Prints out currently held cards"""
-        for cNum in range(len(self.cards)):
-            c = self.cards[cNum]
-            print("{} - {} {}".format(cNum+1, c.symbol, c.value))
+        for i, c in enumerate(self.cards):
+            print("{} - {} {}".format(i + 1, c.symbol, c.value))
 
     def kill(self):
         """Removes a player from the game"""
