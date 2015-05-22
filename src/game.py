@@ -22,6 +22,8 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
+import sys
+
 from general import withinRange
 from player import Player
 import card
@@ -50,15 +52,17 @@ def dispPlayers(stack):
 
         print("Player #{}:\t{}HP\t{}".format(i + 1, plyr.health, defStr))
 
+    sys.stdout.write("\n")
+
 def getInt(msg, a, b):
     try:
         num = int(input(msg))
     except ValueError:
-        print("Not a valid integer. Try again...")
+        print("Not a valid integer. Try again...\n")
         return False
 
     if not withinRange(num, a, b):
-        print("Number is out of range ({} - {}) Try again...".format(a, b))
+        print("Number is out of range ({} - {}) Try again...\n".format(a, b))
         return False
 
     return num
@@ -68,10 +72,13 @@ def takeTurn(playerStack, pNum):
 
     if playerStack[pNum] is None: return
 
-    print("Player #" + str(pNum+1) + "'s turn...")
+    print("Player #" + str(pNum+1) + "'s turn...\n")
     curPlyr = playerStack[pNum]
     while True:
         curPlyr.showCards()
+
+        sys.stdout.write("\n")
+
         # Try to get a valid integer
         cardNum = getInt(
             "Enter the number of the card you'd like to use: ",
