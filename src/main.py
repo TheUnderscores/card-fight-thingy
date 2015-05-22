@@ -31,26 +31,22 @@ import game
 num_players = 2
 player_stack = game.initGame(num_players)
 
-try:
-    while True:
-        for i in range(len(player_stack)):
-            game.dispPlayers(player_stack)
-            game.takeTurn(player_stack, i)
+while True:
+    for i in range(len(player_stack)):
+        game.dispPlayers(player_stack)
+        game.takeTurn(player_stack, i)
 
-        # Check if only one player remains
-        c = 0
+    # Check if only one player remains
+    c = 0
 
-        for i, e in enumerate(player_stack):
-            if e is None: continue
+    for i, e in enumerate(player_stack):
+        if e is None: continue
 
-            c += 1
+        c += 1
 
-            if c > 1:
-                break
+        if c > 1:
+            break
 
-        if c == 1: raise game.GameOverException
-
-except game.GameOverException:
-    pass
+    if c == 1: break
 
 print("Game over. Player {} wins.".format(i))

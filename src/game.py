@@ -28,9 +28,6 @@ from general import withinRange
 from player import Player
 import card
 
-class GameOverException(Exception):
-    pass
-
 def initGame(pCount):
     """Initializes game with pCount number of players"""
     l = []
