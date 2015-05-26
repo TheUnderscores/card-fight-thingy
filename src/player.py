@@ -26,6 +26,9 @@ import sys
 
 import card
 
+class PlayerKilledException(Exception):
+    pass
+
 class Player():
     deckLen = 7
 
@@ -51,12 +54,12 @@ class Player():
 
     def showCards(self):
         """Prints out currently held cards"""
-        for c in self.cards:
-            print("{} {}".format(c.symbol, c.value))
+        for i, c in enumerate(self.cards):
+            print("{} - {} {}".format(i + 1, c.symbol, c.value))
 
     def kill(self):
         """Removes a player from the game"""
-        pass
+        raise PlayerKilledException
 
     def takeDamage(self, damage):
         """

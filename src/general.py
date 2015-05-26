@@ -1,5 +1,3 @@
-#!/usr/bin/env python3
-
 # card-fight-thingy - Simplistic battle card game... thingy
 #
 # The MIT License (MIT)
@@ -24,29 +22,4 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-import sys
-
-import game
-
-num_players = 2
-player_stack = game.initGame(num_players)
-
-while True:
-    for i in range(len(player_stack)):
-        game.dispPlayers(player_stack)
-        game.takeTurn(player_stack, i)
-
-    # Check if only one player remains
-    c = 0
-
-    for i, e in enumerate(player_stack):
-        if e is None: continue
-
-        c += 1
-
-        if c > 1:
-            break
-
-    if c == 1: break
-
-print("Game over. Player {} wins.".format(i))
+withinRange = lambda n, a, b: a <= n <= b
