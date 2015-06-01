@@ -24,18 +24,20 @@
 
 import sys
 
-from general import withinRange
+from general import withinRange, getInt
+import menu
 from player import Player
 import card
 
+maxPlayers = 10
+
 def initGame(pCount):
     """Initializes game with pCount number of players"""
-    l = []
+    global player_stack
+    player_stack = []
 
     for p in range(pCount):
-        l.append(Player())
-
-    return l
+        player_stack.append(Player())
 
 def dispPlayers(stack):
     for i, plyr in enumerate(stack):
@@ -51,26 +53,14 @@ def dispPlayers(stack):
 
     sys.stdout.write("\n")
 
-def getInt(msg, a, b):
-    try:
-        num = int(input(msg))
-    except ValueError:
-        print("Not a valid integer. Try again...\n")
-        return False
+def takeTurn(pNum):
+    """Have player at global player_stack index pNum take their turn"""
+    global player_stack
 
-    if not withinRange(num, a, b):
-        print("Number is out of range ({} - {}) Try again...\n".format(a, b))
-        return False
-
-    return num
-
-def takeTurn(playerStack, pNum):
-    """Have player at playerStack index pNum take their turn"""
-
-    if playerStack[pNum] is None: return
+    if player_stack[pNum] is None: return
 
     print("Player #" + str(pNum+1) + "'s turn...\n")
-    curPlyr = playerStack[pNum]
+    curPlyr = player_stack[pNum]
     while True:
         curPlyr.showCards()
 
@@ -88,24 +78,26 @@ def takeTurn(playerStack, pNum):
 
         if type(curCard) is card.Card_Def:
             if not curCard.apply(curPlyr):
-                print("Cannot use card - defense stack is full. Try again...")
+                print("Cannot use card - defense stack is full. Try again...\n")
                 continue
+            sys.stdout.write("\n")
         elif type(curCard) is card.Card_Atk:
             while True:
                 victim = getInt(
                     "Enter the number of the player you'd like to attack: ",
-                    1, len(playerStack)
+                    1, len(player_stack)
                 )
 
                 if not victim:
                     continue
                 if victim-1 == pNum:
-                    print("You cannot attack yourself. Try again...")
+                    print("You cannot attack yourself. Try again...\n")
                     continue
 
-                if curCard.apply(playerStack[victim - 1]):
+                sys.stdout.write("\n")
+                if curCard.apply(player_stack[victim - 1]):
                     # Player was killed, remove from list
-                    playerStack[victim - 1] = None
+                    player_stack[victim - 1] = None
 
                 break
         else:
@@ -114,3 +106,48 @@ def takeTurn(playerStack, pNum):
 
         curPlyr.removeCard(cardNum-1)
         break
+
+def playGame():
+    """
+    Sets the game in motion after the game has been initialized with initGame()
+    """
+    global player_stack
+
+    while True:
+        for p_i in range(len(player_stack)):
+            dispPlayers(player_stack)
+            takeTurn(p_i)
+
+        # Check if only one player remains
+        c = 0
+
+        for p_i, p in enumerate(player_stack):
+            if p is None: continue
+
+            c += 1
+
+            if c > 1:
+                break
+
+        if c == 1: break
+
+    print("Game over. Player {} wins.\n".format(p_i))
+
+def newGame():
+    """
+    Initializes game with user-defined number of players,
+    then sets the game in motion
+    """
+    while True:
+        pCount = getInt("How many players? Maximum of {}: ".format(maxPlayers),
+                        2, maxPlayers
+        )
+        if not pCount:
+            continue
+        else:
+            sys.stdout.write("\n")
+            break
+
+    initGame(pCount)
+    playGame()
+    menu.chooseOption()

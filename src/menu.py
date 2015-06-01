@@ -1,5 +1,3 @@
-#!/usr/bin/env python3
-
 # card-fight-thingy - Simplistic battle card game... thingy
 #
 # The MIT License (MIT)
@@ -24,10 +22,36 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
+import game
+from general import getInt
 import sys
 
-import game
-import menu
+options = []
 
-menu.init()
-menu.chooseOption()
+def addOption(text, func, args=()):
+    """
+    Create a new menu option denoted by the string text.
+    Function func is called when option is chosen.
+    """
+    options.append({'text': text, 'func': func, 'args': args})
+
+def dispMenu():
+    for o_i, o in enumerate(options):
+        print("{}. {}".format(o_i+1, o['text']))
+
+def chooseOption():
+    while True:
+        dispMenu()
+        optNum = getInt("Choose a menu option: ", 1, len(options))
+        if not optNum:
+            continue
+        else:
+            sys.stdout.write("\n")
+            break
+
+    o = options[optNum-1]
+    o['func'](*o['args'])
+
+def init():
+    addOption("New Game", game.newGame)
+    addOption("Quit", sys.exit, args=(0,))
