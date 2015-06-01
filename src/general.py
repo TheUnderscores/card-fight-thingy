@@ -23,3 +23,16 @@
 # SOFTWARE.
 
 withinRange = lambda n, a, b: a <= n <= b
+
+def getInt(msg, a, b):
+    try:
+        num = int(input(msg))
+    except ValueError:
+        print("Not a valid integer. Try again...\n")
+        return False
+
+    if not withinRange(num, a, b):
+        print("Number is out of range ({} - {}) Try again...\n".format(a, b))
+        return False
+
+    return num
