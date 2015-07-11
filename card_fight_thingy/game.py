@@ -76,7 +76,7 @@ def takeTurn(pNum):
 
         curCard = curPlyr.cards[cardNum-1]
 
-        if action.lower() == 'u':
+        if action.lower() in ('u', "use"):
             if type(curCard) is card.Card_Def:
                 if not curCard.apply(curPlyr):
                     print("Cannot use card - defense stack is full. Try again...\n")
@@ -108,7 +108,7 @@ def takeTurn(pNum):
             else:
                 print("Did not expect object of type \"{}\"".format(type(curCard)))
                 continue
-        elif action.lower() == 'd':
+        elif action.lower() in ('d', "discard"):
             # Fall through
             pass
         else:
