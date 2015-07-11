@@ -39,7 +39,7 @@ def tokenize(s):
         # No victim number, make token 'None'
         tokens.append(None)
     else:
-        # Try to convert victim  number string into number
+        # Try to convert victim  umber string into number
         try:
             tokens[2] = int(tokens[2])
         except ValueError:
