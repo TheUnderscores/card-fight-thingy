@@ -29,6 +29,7 @@ from card_fight_thingy.general import withinRange, getInt
 from . import player
 from card_fight_thingy.player import Player
 from . import card
+from . import parser
 
 maxPlayers = 10
 
@@ -67,17 +68,14 @@ def takeTurn(pNum):
 
         sys.stdout.write("\n")
 
-        # Try to get a valid integer
-        cardNum = getInt(
-            "Enter the number of the card you'd like to select: ",
-            1, curPlyr.deckLen
-        )
+        # Try to get valid input
+        action, cardNum, victim = parser.tokenize(input("Enter action : "))
+
         if not cardNum:
+
             continue
 
         curCard = curPlyr.cards[cardNum-1]
-
-        action = input("Would you like to (u)se or (d)iscard? : ")
 
         if action.lower() == 'u':
             if type(curCard) is card.Card_Def:
@@ -96,12 +94,6 @@ def takeTurn(pNum):
                     if len(player_stack) == 2:
                         victim = 1 if pNum == 2 else 2
                     else:
-                        # More than one other player, ask for target
-                        victim = getInt(
-                            "Enter the number of the player you'd like to attack: ",
-                            1, len(player_stack)
-                        )
-
                         if not victim:
                             continue
                         if victim-1 == pNum:
