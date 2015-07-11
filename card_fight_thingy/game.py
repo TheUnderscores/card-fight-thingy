@@ -87,21 +87,32 @@ def takeTurn(pNum):
                 sys.stdout.write("\n")
             elif type(curCard) is card.Card_Atk:
                 while True:
-                    victim = getInt(
-                        "Enter the number of the player you'd like to attack: ",
-                        1, len(player_stack)
-                    )
+                    # TODO: Checking len(player_stack) here only works if there
+                    # were only ever 2 players. Make it so that it will work when
+                    # the game comes down to 2 players
 
-                    if not victim:
-                        continue
-                    if victim-1 == pNum:
-                        print("You cannot attack yourself. Try again...\n")
-                        continue
+                    # Check if there are only two players. If so, automatically
+                    # select the second player
+                    if len(player_stack) == 2:
+                        victim = 1 if pNum == 2 else 2
+                    else:
+                        # More than one other player, ask for target
+                        victim = getInt(
+                            "Enter the number of the player you'd like to attack: ",
+                            1, len(player_stack)
+                        )
+
+                        if not victim:
+                            continue
+                        if victim-1 == pNum:
+                            print("You cannot attack yourself. Try again...\n")
+                            continue
 
                     sys.stdout.write("\n")
                     if curCard.apply(player_stack[victim - 1]):
                         # Player was killed, remove from list
                         player_stack[victim - 1] = None
+                        print("player_stack is now {} long".format(len(player_stack)))
 
                     break
             else:
