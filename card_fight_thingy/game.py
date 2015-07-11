@@ -72,7 +72,6 @@ def takeTurn(pNum):
         action, cardNum, victim = parser.tokenize(input("Enter action : "))
 
         if not cardNum:
-
             continue
 
         curCard = curPlyr.cards[cardNum-1]
