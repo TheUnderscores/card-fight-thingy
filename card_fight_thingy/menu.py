@@ -49,10 +49,8 @@ def chooseOption():
             continue
         else:
             sys.stdout.write("\n")
-            break
-
-    o = options[optNum-1]
-    o['func'](*o['args'])
+            o = options[optNum-1]
+            o['func'](*o['args'])
 
 def init():
     addOption("New Game", game.newGame)

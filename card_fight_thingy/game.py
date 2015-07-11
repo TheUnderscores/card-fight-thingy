@@ -151,4 +151,3 @@ def newGame():
 
     initGame(pCount)
     playGame()
-    menu.chooseOption()
