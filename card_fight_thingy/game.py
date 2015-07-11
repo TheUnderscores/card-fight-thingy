@@ -104,7 +104,6 @@ def takeTurn(pNum):
                     if curCard.apply(player_stack[victim - 1]):
                         # Player was killed, remove from list
                         player_stack[victim - 1] = None
-                        print("player_stack is now {} long".format(len(player_stack)))
 
                     break
             else:
