@@ -39,7 +39,7 @@ def initGame(pCount):
     player_stack = []
 
     for p in range(pCount):
-        player_stack.append(Player())
+        player_stack.append(Player(p))
 
 def dispPlayers(stack):
     for i, plyr in enumerate(stack):

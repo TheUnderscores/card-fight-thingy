@@ -29,7 +29,8 @@ from . import card
 class Player():
     deckLen = 7
 
-    def __init__(self):
+    def __init__(self, number):
+        self.number = number
         self.health = 100
         # Up to 3 active defense cards
         self.defense = [0, 0, 0]
