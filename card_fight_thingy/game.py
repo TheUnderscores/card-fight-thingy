@@ -69,7 +69,7 @@ def takeTurn(pNum):
 
         # Try to get a valid integer
         cardNum = getInt(
-            "Enter the number of the card you'd like to use: ",
+            "Enter the number of the card you'd like to select: ",
             1, curPlyr.deckLen
         )
         if not cardNum:
@@ -77,32 +77,41 @@ def takeTurn(pNum):
 
         curCard = curPlyr.cards[cardNum-1]
 
-        if type(curCard) is card.Card_Def:
-            if not curCard.apply(curPlyr):
-                print("Cannot use card - defense stack is full. Try again...\n")
-                continue
-            sys.stdout.write("\n")
-        elif type(curCard) is card.Card_Atk:
-            while True:
-                victim = getInt(
-                    "Enter the number of the player you'd like to attack: ",
-                    1, len(player_stack)
-                )
+        action = input("Would you like to (u)se or (d)iscard? : ")
 
-                if not victim:
+        if action.lower() == 'u':
+            if type(curCard) is card.Card_Def:
+                if not curCard.apply(curPlyr):
+                    print("Cannot use card - defense stack is full. Try again...\n")
                     continue
-                if victim-1 == pNum:
-                    print("You cannot attack yourself. Try again...\n")
-                    continue
-
                 sys.stdout.write("\n")
-                if curCard.apply(player_stack[victim - 1]):
-                    # Player was killed, remove from list
-                    player_stack[victim - 1] = None
+            elif type(curCard) is card.Card_Atk:
+                while True:
+                    victim = getInt(
+                        "Enter the number of the player you'd like to attack: ",
+                        1, len(player_stack)
+                    )
 
-                break
+                    if not victim:
+                        continue
+                    if victim-1 == pNum:
+                        print("You cannot attack yourself. Try again...\n")
+                        continue
+
+                    sys.stdout.write("\n")
+                    if curCard.apply(player_stack[victim - 1]):
+                        # Player was killed, remove from list
+                        player_stack[victim - 1] = None
+
+                    break
+            else:
+                print("Did not expect object of type \"{}\"".format(type(curCard)))
+                continue
+        elif action.lower() == 'd':
+            # Fall through
+            pass
         else:
-            print("Did not expect object of type \"{}\"".format(type(curCard)))
+            print("Do not know action \"{}\"".format(action))
             continue
 
         curPlyr.removeCard(cardNum-1)
