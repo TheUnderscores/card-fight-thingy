@@ -24,10 +24,11 @@
 
 import sys
 
-from general import withinRange, getInt
-import menu
-from player import Player
-import card
+from . import general
+from card_fight_thingy.general import withinRange, getInt
+from . import player
+from card_fight_thingy.player import Player
+from . import card
 
 maxPlayers = 10
 

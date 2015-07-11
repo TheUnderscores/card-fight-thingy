@@ -22,9 +22,11 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-import game
-from general import getInt
 import sys
+
+from . import game
+from . import general
+from card_fight_thingy.general import getInt
 
 options = []
 

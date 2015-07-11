@@ -22,11 +22,11 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-from general import withinRange
 from random import seed as srand, randint
 from time import time
 
-import player
+from . import general
+from card_fight_thingy.general import withinRange
 
 srand(time())
 

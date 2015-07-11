@@ -24,7 +24,7 @@
 
 import sys
 
-import card
+from . import card
 
 class PlayerKilledException(Exception):
     pass
