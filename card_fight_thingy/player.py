@@ -26,9 +26,6 @@ import sys
 
 from . import card
 
-class PlayerKilledException(Exception):
-    pass
-
 class Player():
     deckLen = 7
 
@@ -59,7 +56,7 @@ class Player():
 
     def kill(self):
         """Removes a player from the game"""
-        raise PlayerKilledException
+        raise card.PlayerKilledException
 
     def takeDamage(self, damage):
         """

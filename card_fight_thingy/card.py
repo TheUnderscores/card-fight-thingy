@@ -30,6 +30,9 @@ from card_fight_thingy.general import withinRange
 
 srand(time())
 
+class PlayerKilledException(Exception):
+    pass
+
 class Card:
     """Main card class"""
 
@@ -90,7 +93,7 @@ class Card_Atk(Card):
         """
         try:
             target.takeDamage(self.value)
-        except player.PlayerKilledException:
+        except PlayerKilledException:
             return True
 
 def randCard():
