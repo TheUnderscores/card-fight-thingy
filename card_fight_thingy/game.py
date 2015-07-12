@@ -55,6 +55,40 @@ def dispPlayers(stack):
 
     sys.stdout.write("\n")
 
+def tryCardApply(current_player, current_card, victim):
+    """
+    Try to use the card from the player.
+    Return True if success, otherwise return False and a reason
+    """
+    if type(current_card) is card.Card_Def:
+        if not current_card.apply(current_player):
+            return (False, "Defense stack is full. Try again...\n")
+    elif type(current_card) is card.Card_Atk:
+        # TODO: Checking len(player_stack) here only works if there
+        # were only ever 2 players. Make it so that it will work when
+        # the game comes down to 2 players
+
+        # Check if there are only two players. If so, automatically
+        # select the second player
+        #if len(player_stack) == 2:
+        #    victim = 1 if pNum == 2 else 2
+        #else:
+        if not victim:
+            return (False, "Did not say who to attack. Try again...\n")
+
+        if victim-1 == current_player.number:
+            return (False, "You cannot attack yourself. Try again...\n")
+
+        sys.stdout.write("\n")
+        if current_card.apply(player_stack[victim - 1]):
+            # Player was killed, remove from list
+            player_stack[victim - 1] = None
+
+    else:
+        return (False, "Did not expect object {!r}".format(type(current_card)))
+
+    return (True, "")
+
 def takeTurn(pNum):
     """Have player at global player_stack index pNum take their turn"""
     global player_stack
@@ -71,48 +105,27 @@ def takeTurn(pNum):
         # Try to get valid input
         action, cardNum, victim = parser.tokenize(input("Enter action : "))
 
-        if not cardNum:
-            continue
-
-        curCard = curPlyr.cards[cardNum-1]
-
         if action.lower() in ('u', "use"):
-            if type(curCard) is card.Card_Def:
-                if not curCard.apply(curPlyr):
-                    print("Cannot use card - defense stack is full. Try again...\n")
-                    continue
-                sys.stdout.write("\n")
-            elif type(curCard) is card.Card_Atk:
-                while True:
-                    # TODO: Checking len(player_stack) here only works if there
-                    # were only ever 2 players. Make it so that it will work when
-                    # the game comes down to 2 players
-
-                    # Check if there are only two players. If so, automatically
-                    # select the second player
-                    if len(player_stack) == 2:
-                        victim = 1 if pNum == 2 else 2
-                    else:
-                        if not victim:
-                            continue
-                        if victim-1 == pNum:
-                            print("You cannot attack yourself. Try again...\n")
-                            continue
-
-                    sys.stdout.write("\n")
-                    if curCard.apply(player_stack[victim - 1]):
-                        # Player was killed, remove from list
-                        player_stack[victim - 1] = None
-
-                    break
-            else:
-                print("Did not expect object of type \"{}\"".format(type(curCard)))
+            if not cardNum:
+                print("No card number given. Try again...")
                 continue
+
+            ok, msg = tryCardApply(curPlyr, curPlyr.card[cardNum - 1], victim)
+
+            if not ok:
+                print(msg)
+                continue
+
         elif action.lower() in ('d', "discard"):
+            if not cardNum:
+                print("No card number given. Try again...")
+                continue
+
             # Fall through
             pass
+
         else:
-            print("Do not know action \"{}\"".format(action))
+            print("Do not know action {!r}. Try again...".format(action))
             continue
 
         curPlyr.removeCard(cardNum-1)
