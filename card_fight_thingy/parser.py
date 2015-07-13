@@ -22,36 +22,27 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-import game
-from general import getInt
-import sys
+def tokenize(s):
+    tokens = s.split(" ")
 
-options = []
+    if len(tokens) < 2:
+        # No card number, make token 'None'
+        tokens.append(None)
+    else:
+        # Try to convert card number string into number
+        try:
+            tokens[1] = int(tokens[1])
+        except ValueError:
+            tokens[1] = None
 
-def addOption(text, func, args=()):
-    """
-    Create a new menu option denoted by the string text.
-    Function func is called when option is chosen.
-    """
-    options.append({'text': text, 'func': func, 'args': args})
+    if len(tokens) < 3:
+        # No victim number, make token 'None'
+        tokens.append(None)
+    else:
+        # Try to convert victim number string into number
+        try:
+            tokens[2] = int(tokens[2])
+        except ValueError:
+            tokens[2] = None
 
-def dispMenu():
-    for o_i, o in enumerate(options):
-        print("{}. {}".format(o_i+1, o['text']))
-
-def chooseOption():
-    while True:
-        dispMenu()
-        optNum = getInt("Choose a menu option: ", 1, len(options))
-        if not optNum:
-            continue
-        else:
-            sys.stdout.write("\n")
-            break
-
-    o = options[optNum-1]
-    o['func'](*o['args'])
-
-def init():
-    addOption("New Game", game.newGame)
-    addOption("Quit", sys.exit, args=(0,))
+    return tokens

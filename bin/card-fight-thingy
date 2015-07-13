@@ -24,8 +24,14 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-import game
-import menu
+import os
+import sys
+
+if not sys.path[0] in os.environ["HOME"].split(":"):
+    # Runner script is not in user's $PATH. Add current directory to $PATH.
+    sys.path.append(os.path.abspath(os.curdir))
+
+from card_fight_thingy import menu
 
 menu.init()
 menu.chooseOption()
