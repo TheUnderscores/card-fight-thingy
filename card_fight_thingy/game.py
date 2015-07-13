@@ -83,7 +83,7 @@ def tryCardApply(current_player, current_card, victim):
                     "Player {} does not exist. Try again...\n".format(victim)
                 )
 
-        if player_stack[victim] == None:
+        if player_stack[victim-1] == None:
                 return (
                     False,
                     "Player {} is dead. Try again...\n".format(victim)
@@ -220,6 +220,7 @@ def playGame():
         # Check if only one player remains
         c = 0
 
+        winner = None
         for p_i, p in enumerate(player_stack):
             if p is None: continue
 
@@ -227,9 +228,11 @@ def playGame():
 
             if c > 1:
                 break
+            else:
+                winner = p_i+1
 
         if c == 1:
-            endGame(p_i)
+            endGame(winner)
             continue
 
 def newGame():
