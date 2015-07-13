@@ -212,7 +212,8 @@ def playGame():
 
     gameOn = True
     while gameOn:
-        for p_i in range(len(player_stack)):
+        for p_i, p in enumerate(player_stack):
+            if p == None: continue
             dispPlayers(player_stack)
             takeTurn(p_i)
             if not gameOn: break
