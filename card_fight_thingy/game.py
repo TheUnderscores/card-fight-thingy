@@ -76,12 +76,26 @@ def tryCardApply(current_player, current_card, victim):
         if not victim:
             return (False, "Did not say who to attack. Try again...\n")
 
+        if not withinRange(victim, 1, len(player_stack)):
+                return (
+                    False,
+                    "Player {} does not exist. Try again...\n".format(victim)
+                )
+
+        if player_stack[victim] == None:
+                return (
+                    False,
+                    "Player {} is dead. Try again...\n".format(victim)
+                )
+
         if victim-1 == current_player.number:
             return (False, "You cannot attack yourself. Try again...\n")
 
         sys.stdout.write("\n")
         if current_card.apply(player_stack[victim - 1]):
             # Player was killed, remove from list
+            # We do not pop a dead player from the player stack since each
+            # players' identifying number is associated with its indice
             player_stack[victim - 1] = None
 
     else:
@@ -110,7 +124,7 @@ def takeTurn(pNum):
                 print("No card number given. Try again...")
                 continue
 
-            ok, msg = tryCardApply(curPlyr, curPlyr.card[cardNum - 1], victim)
+            ok, msg = tryCardApply(curPlyr, curPlyr.cards[cardNum - 1], victim)
 
             if not ok:
                 print(msg)
