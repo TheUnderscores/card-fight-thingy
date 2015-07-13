@@ -32,6 +32,7 @@ from . import card
 from . import parser
 
 maxPlayers = 10
+gameOn = False
 
 def initGame(pCount):
     """Initializes game with pCount number of players"""
@@ -124,6 +125,8 @@ def takeTurn(pNum):
                 print("No card number given. Try again...")
                 continue
 
+            #DOIT: Check if card in range.
+
             ok, msg = tryCardApply(curPlyr, curPlyr.cards[cardNum - 1], victim)
 
             if not ok:
@@ -135,8 +138,41 @@ def takeTurn(pNum):
                 print("No card number given. Try again...")
                 continue
 
+            #DOIT: Check if card in range.
+
             # Fall through
             pass
+
+        elif action.lower() in ('q', 'quit', 'exit'):
+            while True:
+                action = input("Are you sure you want to quit to menu? (Y/n) : ")
+                if action == '' or action[0].lower() == 'y':
+                    doQuit = True
+                    break
+
+                elif action[0].lower() == 'n':
+                    doQuit = False
+                    break
+
+                else:
+                    print("Invalid option. Try again...\n")
+                    continue
+
+            sys.stdout.write('\n')
+            if doQuit:
+                winners = []
+                topHP = 0
+                for p_i, p in enumerate(player_stack):
+                    if not p: continue
+                    if p.health > topHP:
+                        winners = [p_i+1]
+                        topHP = p.health
+                    elif p.health == topHP:
+                        winners.append(p_i+1)
+                endGame(winners)
+                break
+            else:
+                continue
 
         else:
             print("Do not know action {!r}. Try again...".format(action))
@@ -145,16 +181,41 @@ def takeTurn(pNum):
         curPlyr.removeCard(cardNum-1)
         break
 
+def endGame(whoWon=(None,)):
+    global gameOn
+    if gameOn == False:
+        return False
+    gameOn = False
+
+    if not isinstance(whoWon, (list, tuple)):
+        whoWon = (whoWon,)
+    if len(whoWon) == 0 or not whoWon[0]:
+        print("Game over. No one won.")
+    elif len(whoWon) == 1:
+        print("Game over. Player {} wins.\n".format(whoWon[0]))
+    elif len(whoWon) == 2:
+        print("Game over. Players {} and {} tied.\n".format(whoWon[0], whoWon[1]))
+    else:
+        winStr = ""
+        for p_i, p in enumerate(whoWon):
+            if p_i < len(whoWon)-1:
+                winStr += "{}, ".format(p)
+            else:
+                winStr += "and {}".format(p)
+        print("Game over. Players {} tied.\n".format(winStr))
+
 def playGame():
     """
     Sets the game in motion after the game has been initialized with initGame()
     """
-    global player_stack
+    global player_stack, gameOn
 
-    while True:
+    gameOn = True
+    while gameOn:
         for p_i in range(len(player_stack)):
             dispPlayers(player_stack)
             takeTurn(p_i)
+            if not gameOn: break
 
         # Check if only one player remains
         c = 0
@@ -167,9 +228,9 @@ def playGame():
             if c > 1:
                 break
 
-        if c == 1: break
-
-    print("Game over. Player {} wins.\n".format(p_i))
+        if c == 1:
+            endGame(p_i)
+            continue
 
 def newGame():
     """
