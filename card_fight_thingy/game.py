@@ -162,13 +162,13 @@ def takeTurn(pNum):
             if doQuit:
                 winners = []
                 topHP = 0
-                for p_i, p in enumerate(player_stack):
+                for p in player_stack:
                     if not p: continue
                     if p.health > topHP:
-                        winners = [p_i+1]
+                        winners = [p.number + 1]
                         topHP = p.health
                     elif p.health == topHP:
-                        winners.append(p_i+1)
+                        winners.append(p.number+1)
                 endGame(winners)
                 break
             else:
@@ -212,17 +212,17 @@ def playGame():
 
     gameOn = True
     while gameOn:
-        for p_i, p in enumerate(player_stack):
+        for p in player_stack:
             if p == None: continue
             dispPlayers(player_stack)
-            takeTurn(p_i)
+            takeTurn(p.number)
             if not gameOn: break
 
         # Check if only one player remains
         c = 0
 
         winner = None
-        for p_i, p in enumerate(player_stack):
+        for p in player_stack:
             if p is None: continue
 
             c += 1
@@ -230,10 +230,10 @@ def playGame():
             if c > 1:
                 break
             else:
-                winner = p_i+1
+                winner = p
 
         if c == 1:
-            endGame(winner)
+            endGame(winner.number+1)
             continue
 
 def newGame():
