@@ -165,7 +165,7 @@ def takeTurn(pNum):
                 for p in player_stack:
                     if not p: continue
                     if p.health > topHP:
-                        winners = [p_i+1]
+                        winners = [p.number + 1]
                         topHP = p.health
                     elif p.health == topHP:
                         winners.append(p.number+1)
