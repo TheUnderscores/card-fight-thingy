@@ -25,9 +25,6 @@
 from random import seed as srand, randint
 from time import time
 
-from . import general
-from card_fight_thingy.general import withinRange
-
 srand(time())
 
 class PlayerKilledException(Exception):
@@ -43,7 +40,7 @@ class Card:
         If no value if given or value is out of range, value will be randomly
         generated within proper range.
         """
-        if (value != None and withinRange(value, *self.value_range)):
+        if value and (self.value_range[0] <= value <= self.value_range[1]):
             self.value = value
         else:
             self.value = randint(*self.value_range)

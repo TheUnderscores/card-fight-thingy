@@ -25,7 +25,7 @@
 import sys
 
 from . import general
-from card_fight_thingy.general import withinRange, getInt
+from card_fight_thingy.general import getInt
 from . import player
 from card_fight_thingy.player import Player
 from . import card
@@ -77,7 +77,7 @@ def tryCardApply(current_player, current_card, victim):
         if not victim:
             return (False, "Did not say who to attack. Try again...\n")
 
-        if not withinRange(victim, 1, len(player_stack)):
+        if not (1 <= victim <= len(player_stack)):
                 return (
                     False,
                     "Player {} does not exist. Try again...\n".format(victim)
