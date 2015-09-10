@@ -22,8 +22,6 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-withinRange = lambda n, a, b: a <= n <= b
-
 def getInt(msg, a, b):
     try:
         num = int(input(msg))
@@ -31,7 +29,7 @@ def getInt(msg, a, b):
         print("Not a valid integer. Try again...\n")
         return False
 
-    if not withinRange(num, a, b):
+    if not (a <= num <= b):
         print("Number is out of range ({} - {}) Try again...\n".format(a, b))
         return False
 
